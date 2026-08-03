@@ -8,9 +8,29 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from .services import MondaySyncService
+from .models import FranchiseDevelopment
+
 
 
 class MondaySyncView(APIView):
+
+
+    def get(self, request):
+        data = FranchiseDevelopment.objects.values(
+            "monday_item_id",
+            "franchise_name",
+            "market",
+            "stage",
+            "loi_date",
+            "under_contract_date",
+            "under_development_date",
+            "open_date",
+            "approved_date",
+            "hold_date",
+        )
+
+        return Response(list(data))
+
 
     def post(self, request):
 
