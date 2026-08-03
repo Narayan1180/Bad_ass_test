@@ -15,7 +15,21 @@ class MondaySyncView(APIView):
     def post(self, request):
 
         try:
-            board_id=request.data["board_id"]
+            
+            if "challenge" in request.data:
+                return Response({"challenge": request.data["challenge"]})
+
+        # 2. Monday event
+            event = request.data["event"]
+
+            board_id = event["boardId"]
+            item_id = event["pulseId"]
+            event_type = event["type"]
+
+            print(board_id)
+            print(item_id)
+            print(event_type)
+            #board_id=request.data["board_id"]
             #print(board_id,request.headers)
             result = MondaySyncService().sync(board_id)
 
